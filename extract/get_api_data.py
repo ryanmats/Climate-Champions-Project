@@ -9,9 +9,9 @@ import os
 DEFAULT_PATH = 'data/our_data_1.csv'
 
 # API Keys
-OPENSTATES_API_KEY = '30c07fac-0fc2-4762-b74a-cfad80204d1f'
-LEGISCAN_API_KEY = '76e218a33e8562b27aa87995804a30d3'
-BILLTRACK50_API_KEY = '44ee6107-4416-422a-b72b-e02f0e8ec641'
+OPENSTATES_API_KEY = 'INSERT_API_KEY_HERE' # Get your own API key from https://openstates.org/api/v3/#section/Authentication
+LEGISCAN_API_KEY = 'INSERT_API_KEY_HERE' # Get your own API key from https://legiscan.com/gaits/register
+BILLTRACK50_API_KEY = 'INSERT_API_KEY_HERE' # Get your own API key from https://www.billtrack50.com/signup
 
 # MAX LIMIT
 MAX_LIMIT=400
