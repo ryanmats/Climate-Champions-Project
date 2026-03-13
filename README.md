@@ -10,16 +10,16 @@ Note that this project is currently an MVP / proof-of-concept and more work shou
 A deployed web application is available at [https://climate-project-489910.uw.r.appspot.com/](https://climate-project-489910.uw.r.appspot.com/).
 
 ## Data Architecture Overview
-TODO: Add data architecture diagram
-TODO: Add data architecture description
-TODO: Add data architecture analaysis including pros/cons and potential alternatives and improvements
+- TODO: Add data architecture diagram
+- TODO: Add data architecture description
+- TODO: Add data architecture analaysis including pros/cons and potential alternatives and improvements
 
 ## Database Overview
-TODO: Add database development diagram (e.g. how src, stg, and reporting tables connect, with dependencies)
-TODO: Add database development analysis including pros/cons and potential alternatives and improvements
+- TODO: Add database development diagram (e.g. how src, stg, and reporting tables connect, with dependencies)
+- TODO: Add database development analysis including pros/cons and potential alternatives and improvements
 
 ## Political Data APIs Discussion (Legiscan, BillTrack50, OpenStates)
-TODO: Add discussion of the pros/cons of each API and why you chose to gather certain data fields from each API.
+- TODO: Add discussion of the pros/cons of each API and why you chose to gather certain data fields from each API.
 
 ## Further Work To Be Done
 - Integrate Vertex AI / Gemini model to analyze whether or not Climate Cabinet would approve each climate-related bill
