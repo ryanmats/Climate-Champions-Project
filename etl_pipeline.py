@@ -22,7 +22,7 @@ DATASET_ID = "civic_data"
 GOOGLE_CLOUD_CREDENTIALS_PATH = 'service.json'
 
 # Source tables
-LEGISCAN_MASTERLIST_TABLE_ID = f"{PROJECT_ID}.{DATASET_ID}.src_legiscan_masterlist_ca_2172"
+LEGISCAN_MASTERLIST_TABLE_ID = f"{PROJECT_ID}.{DATASET_ID}.src_legiscan_masterlist"
 OPENSTATES_LEGISLATORS_TABLE_ID = f"{PROJECT_ID}.{DATASET_ID}.src_openstates_ca_legislators"
 
 # Staging tables
@@ -102,8 +102,8 @@ def get_legiscan_masterlist_data():
         print(f"An error occurred: {err}")
 
 
-# Source Table: OpenStates California Legislators
-# This is a nightly-updated CSV of all current legislators for California from OpenStates.
+# Source Table: Open States California Legislators
+# This is a nightly-updated CSV of all current legislators for California from Open States.
 def get_openstates_california_legislators_data():
     df_legislators = pd.read_csv("https://data.openstates.org/people/current/ca.csv")
     upload_to_bigquery(df_legislators, OPENSTATES_LEGISLATORS_TABLE_ID)
@@ -123,13 +123,13 @@ def get_passed_climate_bills_data():
 
 
 # Staging Table: Passed Climate Bills Sponsors
-# This table takes the list of passed climate bills and gets all their sponsors from the OpenStates API.
+# This table takes the list of passed climate bills and gets all their sponsors from the Open States API.
 def get_passed_climate_bills_sponsors_data():
     # 1. Get bill numbers from BigQuery
     sql = f"SELECT bill_number FROM {PASSED_CLIMATE_BILLS_TABLE_ID}"
     df = get_bigquery_query_results(sql)
     
-    # Remove spaces from bill numbers for the OpenStates v3 API identifier match
+    # Remove spaces from bill numbers for the Open States v3 API identifier match
     bill_list = df['bill_number'].str.replace(" ", "", regex=False).tolist()
     
     base_url = "https://v3.openstates.org/bills"
@@ -138,7 +138,7 @@ def get_passed_climate_bills_sponsors_data():
     # Collect all sponsors in a list of dictionaries, which we will convert to a DataFrame at the end.
     all_sponsors = []
 
-    # 2. Break the list into chunks of 10 (to respect OpenStates API limits) and loop through each chunk
+    # 2. Break the list into chunks of 10 (to respect Open States API limits) and loop through each chunk
     chunk_size = 5 
     for i in range(0, len(bill_list), chunk_size):
         batch = bill_list[i : i + chunk_size]
@@ -174,7 +174,7 @@ def get_passed_climate_bills_sponsors_data():
             
             print(f"Processed batch {i//chunk_size + 1}...")
             
-            # 4. Small delay to be polite to the API and avoid hitting rate limits (OpenStates allows 10 req/sec, we are doing 1 req per chunk of 5 bills, so this is very safe)
+            # 4. Small delay to be polite to the API and avoid hitting rate limits (Open States allows 10 req/sec, we are doing 1 req per chunk of 5 bills, so this is very safe)
             time.sleep(1)
 
         except Exception as e:
@@ -246,7 +246,7 @@ def get_billtrack50_aisummaries():
 
 # Reporting Table: Climate Champions
 # This table identifies the top 10 climate champions based on the number of passed climate bills they sponsored,
-# and enriches that data with legislator information from OpenStates.
+# and enriches that data with legislator information from Open States.
 def create_reporting_table_climate_champions():
     reporting_table_climate_champions_sql = f"""
     CREATE OR REPLACE TABLE {REPORTING_CLIMATE_CHAMPIONS_TABLE_ID} AS (
