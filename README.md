@@ -1,8 +1,8 @@
 # Climate Champions Project
-Data Engineering project to showcase California state legislators who have sponsored passing climate-related bills in the 2025-2026 session. Uses Legiscan, BillTrack50, and OpenStates APIs and Google Cloud (BigQuery, App Engine, Cloud Functions, Cloud Scheduler). Displays data on a dashboard web app.
+Data Engineering project to showcase California state legislators who have sponsored passing climate-related bills in the 2025-2026 session. Uses Legiscan, BillTrack50, and Open States APIs and Google Cloud (BigQuery, App Engine, Cloud Functions, Cloud Scheduler). Displays data on a dashboard web app.
 
 ## Project Purpose
-The purpose of this project is to gain more experience working with key political data APIs ([Legiscan](https://legiscan.com/legiscan), [BillTrack50](https://www.billtrack50.com/documentation/webservices), and [OpenStates](https://docs.openstates.org/api-v3/)), building data pipelines in Python, database development with BigQuery/SQL/Dataform, cloud architecture (Google Cloud Functions, Google Cloud Scheduler), web development (Flask, HTML/CSS/JavaScript, App Engine), and AI development tools (GitHub Copilot).
+The purpose of this project is to gain more experience working with key political data APIs ([Legiscan](https://legiscan.com/legiscan), [BillTrack50](https://www.billtrack50.com/documentation/webservices), and [Open States](https://docs.openstates.org/api-v3/)), building data pipelines in Python, database development with BigQuery/SQL/Dataform, cloud architecture (Google Cloud Functions, Google Cloud Scheduler), web development (Flask, HTML/CSS/JavaScript, App Engine), and AI development tools (GitHub Copilot).
 
 Note that this project is currently an MVP / proof-of-concept and more work should be done to improve code style, add additional features, and make some things more generalizable.
 
