@@ -5,9 +5,6 @@ from google.cloud import bigquery
 from google.oauth2 import service_account
 import os
 
-# Local CSV File paths
-DEFAULT_PATH = 'data/our_data_1.csv'
-
 # API Keys
 OPENSTATES_API_KEY = 'INSERT_API_KEY_HERE' # Get your own API key from https://openstates.org/api/v3/#section/Authentication
 LEGISCAN_API_KEY = 'INSERT_API_KEY_HERE' # Get your own API key from https://legiscan.com/gaits/register
