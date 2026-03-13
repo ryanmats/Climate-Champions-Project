@@ -1,0 +1,2 @@
+# Climate-Champions-Project
+Data Engineering project to showcase California state legislators who have sponsored passing climate-related bills in the 2025-2026 session. Uses Legiscan, BillTrack50, and OpenStates APIs and Google Cloud (BigQuery, App Engine, Cloud Functions, Cloud Scheduler). Displays data on a dashboard web app.
