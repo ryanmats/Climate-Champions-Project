@@ -9,9 +9,9 @@ import os
 DEFAULT_PATH = 'data/our_data_1.csv'
 
 # API Keys
-OPENSTATES_API_KEY = 'ADD_API_KEY_HERE'
-LEGISCAN_API = 'ADD_API_KEY_HERE'
-BILLTRACK50_API_KEY = 'ADD_API_KEY_HERE'
+OPENSTATES_API_KEY = '30c07fac-0fc2-4762-b74a-cfad80204d1f'
+LEGISCAN_API_KEY = '76e218a33e8562b27aa87995804a30d3'
+BILLTRACK50_API_KEY = '44ee6107-4416-422a-b72b-e02f0e8ec641'
 
 # MAX LIMIT
 MAX_LIMIT=400
@@ -19,11 +19,7 @@ MAX_LIMIT=400
 # Google Cloud Configuration
 PROJECT_ID = "climate-project-489910"
 DATASET_ID = "civic_data"
-TABLE_ID = f"{PROJECT_ID}.{DATASET_ID}.jurisdictions"
-SESSIONS_TABLE_ID = f"{PROJECT_ID}.{DATASET_ID}.src_legiscan_sessions"
 MASTERLIST_TABLE_ID = f"{PROJECT_ID}.{DATASET_ID}.src_legiscan_masterlist_ca_2172"
-BILLTRACK50_TABLE_ID = f"{PROJECT_ID}.{DATASET_ID}.src_billtrack50_bills_ca_currentsession"
-BILLTRACK50_LEGISLATORS_TABLE_ID = f"{PROJECT_ID}.{DATASET_ID}.src_billtrack50_ca_legislators"
 OPENSTATES_LEGISLATORS_TABLE_ID = f"{PROJECT_ID}.{DATASET_ID}.src_openstates_ca_legislators"
 PASSED_CLIMATE_BILLS_TABLE_ID = f"{PROJECT_ID}.{DATASET_ID}.stg_passed_climate_bills"
 PASSED_CLIMATE_BILLS_SPONSORS_TABLE_ID = f"{PROJECT_ID}.{DATASET_ID}.stg_passed_climate_bills_sponsors"
@@ -54,7 +50,7 @@ def upload_to_bigquery(df, table_id):
         
     # Start the load job
     job = client.load_table_from_dataframe(df, table_id, job_config=job_config)
-        
+
     # Wait for the job to complete (Crucial for error handling)
     job.result()
     print(f"Successfully loaded data to {table_id}.")
@@ -81,89 +77,6 @@ def get_bigquery_query_results(sql):
     
     print(f"Successfully retrieved {len(df)} rows from BigQuery.")
     return df
-
-# Fetch Open States API Data
-def get_open_states_data():
-
-    base_url = "https://v3.openstates.org/jurisdictions"
-    
-    # Define headers (recommended way to pass the API key)
-    headers = {
-        "X-API-KEY": OPENSTATES_API_KEY
-    }
-    
-    # Define query parameters based on the specification
-    params = {
-        "classification": "state",  # Filter for states only
-        "include": [],  # Include session data
-        "per_page": 52,  # Get all 50 states + DC + PR in one go
-        "page": 1
-    }
-
-    try:
-        response = requests.get(base_url, headers=headers, params=params)
-        
-        # Check if the request was successful
-        response.raise_for_status()
-        
-        data = response.json()
-        
-        # Print results
-        for jurisdiction in data.get("results", []):
-            name = jurisdiction.get("name")
-            jid = jurisdiction.get("id")
-            print(f"Jurisdiction: {name} ({jid})")
-
-        # 1. Convert to DataFrame
-        results = data.get("results", [])
-        df = pd.DataFrame(results)
-        print("Printing all results: \n")
-        print(df)
-
-        upload_to_bigquery(df, TABLE_ID)
-
-    except requests.exceptions.HTTPError as err:
-        print(f"HTTP error occurred: {err}")
-    except Exception as err:
-        print(f"An error occurred: {err}")
-
-
-def get_legiscan_data():
-
-    base_url = f"https://api.legiscan.com/?key={LEGISCAN_API_KEY}"
-    
-    # Define query parameters based on the specification
-    params = {
-        "op": "getSessionList",
-        "state": "CA"
-    }
-
-    try:
-        response = requests.get(base_url, params=params)
-        
-        # Check if the request was successful
-        response.raise_for_status()
-        
-        data = response.json()
-        
-        # Print results
-        for session in data.get("sessions", []):
-            session_id = session.get("session_id")
-            session_title = session.get("session_title")
-            print(f"Session ID: {session_id}")
-            print(f"Session Title: {session_title}")
-            print(session)
-            print("\n")
-        
-        # 1. Convert to DataFrame
-        results = data.get("sessions", [])
-        df = pd.DataFrame(results)
-        upload_to_bigquery(df, SESSIONS_TABLE_ID)
-
-    except requests.exceptions.HTTPError as err:
-        print(f"HTTP error occurred: {err}")
-    except Exception as err:
-        print(f"An error occurred: {err}")
 
 def get_legiscan_masterlist_data():
 
@@ -201,80 +114,7 @@ def get_legiscan_masterlist_data():
         # Drop the columns
         df = df.drop(columns=metadata_cols)
         print(df)
-        
         upload_to_bigquery(df, MASTERLIST_TABLE_ID)
-
-    except requests.exceptions.HTTPError as err:
-        print(f"HTTP error occurred: {err}")
-    except Exception as err:
-        print(f"An error occurred: {err}")
-
-def get_billtrack50_data():
-
-    base_url = f"https://www.billtrack50.com/bt50api/2.1/json/bills"
-
-    # Define headers (recommended way to pass the API key)
-    headers = {
-        "Authorization": f"apikey {BILLTRACK50_API_KEY}",
-        "Content-Type": "application/json"
-    }
-    
-    # Define query parameters based on the specification
-    params = {
-        "stateCodes": "CA",
-        "searchText": "climate"
-    }
-
-    try:
-        response = requests.get(base_url, headers=headers, params=params)
-        
-        # Check if the request was successful
-        response.raise_for_status()
-        
-        data = response.json()
-
-        # 1. Convert to DataFrame
-        results = data.get("bills", [])
-        df = pd.DataFrame(results)
-        print(df)
-        
-        upload_to_bigquery(df, BILLTRACK50_TABLE_ID)
-
-    except requests.exceptions.HTTPError as err:
-        print(f"HTTP error occurred: {err}")
-    except Exception as err:
-        print(f"An error occurred: {err}")
-
-def get_billtrack50_california_legislators_data():
-
-    base_url = f"https://www.billtrack50.com/bt50api/2.1/json/legislators"
-
-    # Define headers (recommended way to pass the API key)
-    headers = {
-        "Authorization": f"apikey {BILLTRACK50_API_KEY}",
-        "Content-Type": "application/json"
-    }
-    
-    # Define query parameters based on the specification
-    params = {
-        "legislatorName": "Scott Wiener",
-        "stateCodes": "CA"
-    }
-
-    try:
-        response = requests.get(base_url, headers=headers, params=params)
-        
-        # Check if the request was successful
-        response.raise_for_status()
-        
-        data = response.json()
-
-        # 1. Convert to DataFrame
-        results = data.get("legislators", [])
-        df = pd.DataFrame(results)
-        print(df)
-        
-        upload_to_bigquery(df, BILLTRACK50_LEGISLATORS_TABLE_ID)
 
     except requests.exceptions.HTTPError as err:
         print(f"HTTP error occurred: {err}")
@@ -289,7 +129,7 @@ def get_openstates_california_legislators_data():
 def get_passed_climate_bills_data():
     passed_climate_bills_sql = f"""
     CREATE OR REPLACE TABLE {PASSED_CLIMATE_BILLS_TABLE_ID} AS
-    SELECT 'CA' as state, number as bill_number, title, status, last_action  FROM `climate-project-489910.civic_data.src_legiscan_masterlist_ca_2172` WHERE
+    SELECT 'CA' as state, number as bill_number, title, status, last_action  FROM {MASTERLIST_TABLE_ID} WHERE
   (REGEXP_CONTAINS(title, r'(climate|environment|emission|energy|pollution|greenhouse)') OR REGEXP_CONTAINS(description, r'(climate|environment|emission|energy|pollution|greenhouse)'))
     AND status = 4.0;
     """
@@ -458,14 +298,10 @@ def create_reporting_table_passed_climate_bills():
 
 
 if __name__ == "__main__":
-    # get_open_states_data()
-    #get_legiscan_data()
-    #get_legiscan_masterlist_data()
-    #get_billtrack50_data()
-    #get_billtrack50_california_legislators_data()
-    #get_openstates_california_legislators_data()
-    #get_passed_climate_bills_data()
-    #get_passed_climate_bills_sponsors_data()
-    #get_billtrack50_aisummaries()
-    #create_reporting_table_climate_champions()
+    get_legiscan_masterlist_data()
+    get_openstates_california_legislators_data()
+    get_passed_climate_bills_data()
+    get_passed_climate_bills_sponsors_data()
+    get_billtrack50_aisummaries()
+    create_reporting_table_climate_champions()
     create_reporting_table_passed_climate_bills()
