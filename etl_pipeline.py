@@ -10,9 +10,6 @@ OPENSTATES_API_KEY = 'INSERT_API_KEY_HERE' # Get your own API key from https://o
 LEGISCAN_API_KEY = 'INSERT_API_KEY_HERE' # Get your own API key from https://legiscan.com/gaits/register
 BILLTRACK50_API_KEY = 'INSERT_API_KEY_HERE' # Get your own API key from https://www.billtrack50.com/signup
 
-# MAX LIMIT
-MAX_LIMIT=400
-
 # Google Cloud Configuration
 PROJECT_ID = "climate-project-489910"
 DATASET_ID = "civic_data"
