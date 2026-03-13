@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Climate Dashboard</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header>
+    <h1>Climate Dashboard</h1>
+    <p>Reporting tables: Climate Champions & Passed Climate Bills</p>
+  </header>
+
+  <main>
+    <div class="tabs">
+      <button id="tab-champions" class="tab active">Top Climate Champions</button>
+      <button id="tab-bills" class="tab">Passed Climate Bills</button>
+    </div>
+    <div id="content-champions" class="tab-content">
+      <div class="controls">
+        <button id="refresh-champions">Refresh</button>
+      </div>
+      <div id="champions-container">Loading...</div>
+    </div>
+    <div id="content-bills" class="tab-content" style="display:none;">
+      <div class="controls">
+        <button id="refresh-bills">Refresh</button>
+      </div>
+      <div id="bills-container">Loading...</div>
+    </div>
+  </main>
+
+  <footer>
+    <small>Data from BigQuery | Local dev only</small>
+  </footer>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

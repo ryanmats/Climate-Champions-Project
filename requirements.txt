@@ -1,0 +1,15 @@
+Flask==3.1.1
+Flask-CORS==6.0.0
+google-cloud-bigquery==3.33.0
+
+requests
+pandas
+sqlalchemy
+psycopg2-binary
+python-dotenv
+jupyter
+ipykernel
+matplotlib
+seaborn
+pyarrow
+db-dtypes
