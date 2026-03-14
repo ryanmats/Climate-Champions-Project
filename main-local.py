@@ -7,6 +7,7 @@ from google.cloud import bigquery
 import subprocess
 import os
 import pandas as pd
+import numpy as np
 from google.oauth2 import service_account
 from dotenv import load_dotenv
 
@@ -16,6 +17,12 @@ class CustomJSONProvider(DefaultJSONProvider):
     def default(self, obj):
         if isinstance(obj, (time, datetime)):
             return obj.isoformat()
+        if isinstance(obj, np.integer):
+            return int(obj)
+        if isinstance(obj, np.floating):
+            return float(obj)
+        if isinstance(obj, np.ndarray):
+            return obj.tolist()
         return super().default(obj)
 
 app = Flask(__name__, static_folder='static', template_folder='templates')
@@ -28,6 +35,7 @@ DATASET_ID = "civic_data"
 CREDENTIALS_PATH = os.path.join(os.path.dirname(__file__), 'service.json')
 CLIMATE_CHAMPIONS_TABLE = f"{PROJECT_ID}.{DATASET_ID}.reporting_climate_champions"
 PASSED_CLIMATE_BILLS_TABLE = f"{PROJECT_ID}.{DATASET_ID}.reporting_passed_climate_bills"
+CLIMATE_INFLUENCE_TABLE = f"{PROJECT_ID}.{DATASET_ID}.reporting_climate_influence_score"
 
 
 # Get BigQuery client using service account credentials (suitable for local development)
@@ -46,6 +54,7 @@ def query_table(table_id, limit=1000, order_by=None):
         sql += f" LIMIT {limit}"
     job = client.query(sql)
     df = job.result().to_dataframe()
+    df = df.replace({float('nan'): None})
     return df
 
 
@@ -69,7 +78,18 @@ def api_climate_champions():
 @app.route('/api/passed_climate_bills')
 def api_passed_climate_bills():
     try:
-        df = query_table(PASSED_CLIMATE_BILLS_TABLE, limit=1000)
+        df = query_table(PASSED_CLIMATE_BILLS_TABLE, limit=1000, order_by='last_action_date DESC')
+        return jsonify(df.to_dict(orient='records'))
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+# API route to get climate influencers data from BigQuery reporting table
+@app.route('/api/climate_influencers')
+def api_climate_influencers():
+    try:
+        df = query_table(CLIMATE_INFLUENCE_TABLE, limit=10, order_by="climate_influence_score DESC")
+        print(df)
         return jsonify(df.to_dict(orient='records'))
     except Exception as e:
         return jsonify({'error': str(e)}), 500

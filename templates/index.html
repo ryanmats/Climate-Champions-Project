@@ -16,6 +16,7 @@
     <div class="tabs">
       <button id="tab-champions" class="tab active">Top Climate Champions</button>
       <button id="tab-bills" class="tab">Passed Climate Bills</button>
+      <button id="tab-influencers" class="tab">Top Climate Influencers</button>
     </div>
     <div id="content-champions" class="tab-content">
       <div class="controls">
@@ -28,6 +29,37 @@
         <button id="refresh-bills">Refresh</button>
       </div>
       <div id="bills-container">Loading...</div>
+    </div>
+    <div id="content-influencers" class="tab-content" style="display:none;">
+      <p>This tab displays the top legislators ranked by their Climate Influence Score, which is the number of climate-related committees they serve on.</p>
+      <div style="display: flex; justify-content: space-between;">
+        <div>
+          <p><strong>Qualifying Assembly Committees:</strong></p>
+          <ul>
+            <li>Environmental Safety and Toxic Materials</li>
+            <li>Natural Resources</li>
+            <li>Utilities and Energy</li>
+            <li>Climate Innovation and Infrastructure Select</li>
+            <li>Electric Vehicles and Charging Infrastructure Select</li>
+            <li>Sea Level Rise and the California Economy Select</li>
+            <li>Wildfire Prevention Select</li>
+          </ul>
+        </div>
+        <div>
+          <p><strong>Qualifying Senate Committees:</strong></p>
+          <ul>
+            <li>Energy, Utilities and Communications</li>
+            <li>Environmental Quality</li>
+            <li>Natural Resources and Water</li>
+            <li>Green Economic Development Select</li>
+            <li>Hydrogen Energy Select</li>
+          </ul>
+        </div>
+      </div>
+      <div class="controls">
+        <button id="refresh-influencers">Refresh</button>
+      </div>
+      <div id="influencers-container">Loading...</div>
     </div>
   </main>
 
