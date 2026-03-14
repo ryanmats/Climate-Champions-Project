@@ -16,8 +16,16 @@ button{background:var(--accent);color:#042018;border:0;padding:8px 12px;border-r
 .bill-card p{margin:0;font-size:0.9rem;color:var(--muted);line-height:1.5}
 .champion-card{display:flex;gap:16px;margin-bottom:20px;padding:16px;border:1px solid rgba(255,255,255,0.1);border-radius:8px;background:var(--glass);align-items:flex-start}
 .champion-left{display:flex;flex-direction:column;align-items:center;min-width:200px}
+.champion-left.no-image{align-items:flex-start}
 .champion-img{width:100px;height:100px;object-fit:cover;border-radius:50%;margin-bottom:8px}
 .champion-name{text-align:center;font-size:1.2rem;font-weight:bold;margin:0}
+.champion-left.no-image .champion-name{
+
+  margin-top: 108px;
+
+  margin-left: 25px;
+
+}
 .champion-details{flex:1}
 .champion-details p{margin:4px 0;font-size:0.9rem;color:var(--muted)}
 .champion-details a{color:var(--accent);text-decoration:none}
