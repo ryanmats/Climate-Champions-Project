@@ -29,7 +29,7 @@ Right now I am running all of the SQL scripts (to create source, staging, and re
 
 
 ## Database Overview
-![Database Structure](database-structure.png)
+![Database Structure](database-structure-updated.png)
 
 My BigQuery database tables are organized into source, staging, and reporting tables. Source tables reflect raw data gathered from API calls. Staging tables involve some level of data manipulation of those source tables as well as other staging tables. They also sometimes involve additional API calls. Reporting tables query staging tables to fetch only the relevant data fields we want to display on our web app.
 
