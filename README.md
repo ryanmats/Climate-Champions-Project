@@ -5,11 +5,17 @@ Data Engineering project to showcase California state legislators who have spons
 ## Project Purpose
 The purpose of this project is to gain more experience working with key political data APIs ([Legiscan](https://legiscan.com/legiscan), [BillTrack50](https://www.billtrack50.com/documentation/webservices), and [Open States](https://docs.openstates.org/api-v3/)), building data pipelines in Python, database development with BigQuery/SQL/Dataform, cloud architecture (Google Cloud Functions, Google Cloud Scheduler), web development (Flask, HTML/CSS/JavaScript, App Engine), and AI development tools (GitHub Copilot).
 
-Note that this project is currently an MVP / proof-of-concept and more work should be done to improve code style, add additional features, and make some things more generalizable.
+Note that this project is currently an MVP / proof-of-concept and more work can be done to improve code style, add additional features, and make some things more generalizable.
 
 
-## Deployed Web Application
+## Deployed Web Application & Key Features
 A deployed web application is available at [https://climate-project-489910.uw.r.appspot.com/](https://climate-project-489910.uw.r.appspot.com/).
+
+The first tab shows 'Top Climate Champions,' who are the California legislators who have sponsored the most climate-related bills in the current session, along with biographical and contact information. Note that this metric does not do any checks about the substance of these bills and whether or not a progressive climate organization would support them - that will be explored in the future.
+
+The second tab shows Passed Climate Bills in the current California legislative session, including AI-summaries sourced from BillTrack50.
+
+The third tab shows 'Top Climate Influencers,' who are the California legislators who are part of the most climate-related committees.
 
 
 ## Data Architecture Overview
@@ -56,6 +62,7 @@ The BillTrack50 API is great for getting AI summaries of bills. I also found it 
 ## Future Work To Be Done
 - See if there are better ways to identify climate-related bills (rather than simple keyword search)
 - Integrate Vertex AI / Gemini model to analyze whether or not Climate Cabinet would approve each climate-related bill
+- Create a Google Sheet where a climate organization can input their position on climate-related bills and have that feed into BigQuery. Then we can create a "Climate Scorecard" that ranks legislators by how often they have voted in alignment with the climate organization.
 - Add functionality to find Climate Champion Legislators based on any climate-related bills introduced (without the requirement of passage)
 - Generalize code and dashboard from California to All States
 - Generalize code and dashboard from 2025-2026 Session to All Available Sessions
